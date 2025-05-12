@@ -30,7 +30,14 @@ jobs:
           # Copy all necessary files to the deployment directory
           cp -r index.html _site/
           cp -r dist _site/
-          cp -r img _site/
+          # Only copy img directory if it exists
+          if [ -d "img" ]; then
+            cp -r img _site/
+          else
+            echo "Note: img directory not found, skipping"
+            # Create empty img directory to prevent broken references
+            mkdir -p _site/img
+          fi
           cp CNAME _site/
           # Add any other static files or directories that need to be deployed
           # cp -r other-files _site/ (if needed)
